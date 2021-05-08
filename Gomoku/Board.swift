@@ -1,15 +1,8 @@
 final class Board {
-
-    // MARK: Nested
-    enum Config {
-        static let WIDTH = 19
-        static let HEIGHT = 19
-    }
-
-    // MARK: Properties
+    let NUMBER_OF_COLUMNS = 19
+    let NUMBER_OF_ROWS = 19
     var placedStones = [Int: Player]()
 
-    // MARK: Public
     func placeStone(intersection: Intersection, player: Player) throws {
         let location = try makeLocation(intersection: intersection)
         guard placedStones[location] == nil else {
@@ -26,15 +19,14 @@ final class Board {
         return .nothing
     }
 
-    // MARK: Private
     private func makeLocation(intersection: Intersection) throws -> Int {
         guard isLocationValid(row: intersection.row, column: intersection.column) else {
             throw BoardError.BadLocation
         }
-        return intersection.column * Config.WIDTH + intersection.row
+        return intersection.column * NUMBER_OF_COLUMNS + intersection.row
     }
 
     private func isLocationValid(row: Int, column: Int) -> Bool {
-        (0..<Config.HEIGHT).contains(row) && (0..<Config.WIDTH).contains(column)
+        (0..<NUMBER_OF_ROWS).contains(row) && (0..<NUMBER_OF_COLUMNS).contains(column)
     }
 }

@@ -3,7 +3,7 @@ final class GomokuRules {
         let yPosition = 0
         var playerPiecesInARow = 0
 
-        for xPosition in 0..<Board.Config.WIDTH {
+        for xPosition in 0..<board.NUMBER_OF_COLUMNS {
             let intersection = Intersection(row: yPosition, column: xPosition)
             let playerPiece = try board.getStone(intersection: intersection)
             if playerPiece == .white {

@@ -39,16 +39,6 @@
                ReferencedContainer = "container:Gomoku.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C9C03F652644E99A00F7264B"
-               BuildableName = "GomokuUITests.xctest"
-               BlueprintName = "GomokuUITests"
-               ReferencedContainer = "container:Gomoku.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

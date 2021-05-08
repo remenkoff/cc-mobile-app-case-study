@@ -1,13 +1,10 @@
 import XCTest
-@testable import Gomoku
 
 final class GomokuRulesTest: XCTestCase {
-
-    // MARK: Properties
+    
     private var board: Board!
     private var rules: GomokuRules!
 
-    // MARK: Lifecycle
     override func setUp() {
         super.setUp()
         board = Board()
@@ -20,7 +17,6 @@ final class GomokuRulesTest: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: Tests
     func testIsWin_isFalse_whenBoardIsEmpty() {
         XCTAssertFalse(try isWin())
     }
@@ -59,18 +55,16 @@ final class GomokuRulesTest: XCTestCase {
     }
 
     func testIsWin_isTrue_whenFiveInARowInAnyRow() throws {
-        for yPosition in 0..<Board.Config.HEIGHT {
+        for yPosition in 0..<board.NUMBER_OF_ROWS {
             board = Board()
             for xPosition in 0..<5 {
                 let intersection = Intersection(row: yPosition, column: xPosition)
                 try board.placeStone(intersection: intersection, player: .white)
             }
+            XCTAssertTrue(try isWin())
         }
-
-        XCTAssertTrue(try isWin())
     }
 
-    // MARK: Private
     private func isWin() throws -> Bool {
         try rules.isWin(board: board)
     }

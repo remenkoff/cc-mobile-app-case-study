@@ -1,67 +1,63 @@
 import XCTest
-@testable import Gomoku
 
 final class BoardTest: XCTestCase {
 
-    // MARK: Properties
-    private var sut: Board!
+    private var board: Board!
 
-    // MARK: Lifecycle
     override func setUp() {
         super.setUp()
-        sut = Board()
+        board = Board()
     }
 
     override func tearDown() {
-        sut = nil
+        board = nil
         super.tearDown()
     }
 
-    // MARK: Tests
     func testPlacedStones_isEmpty_whenBoardIsNew() {
-        XCTAssertEqual(sut.placedStones.count, 0)
+        XCTAssertEqual(board.placedStones.count, 0)
     }
 
     func testPlaceStone_addsTheSameAndTheOnlyOneStone() throws {
         var intersection = Intersection(row: 1, column: 1)
         var player = Player.white
 
-        try sut.placeStone(intersection: intersection, player: player)
-        let placedWhiteStone = try sut.getStone(intersection: intersection)
+        try board.placeStone(intersection: intersection, player: player)
+        let placedWhiteStone = try board.getStone(intersection: intersection)
 
-        XCTAssertEqual(sut.placedStones.count, 1)
+        XCTAssertEqual(board.placedStones.count, 1)
         XCTAssertEqual(placedWhiteStone, player)
 
         intersection = .zero
         player = .black
 
-        try sut.placeStone(intersection: intersection, player: player)
-        let placedBlackStone = try sut.getStone(intersection: intersection)
+        try board.placeStone(intersection: intersection, player: player)
+        let placedBlackStone = try board.getStone(intersection: intersection)
 
-        XCTAssertEqual(sut.placedStones.count, 2)
+        XCTAssertEqual(board.placedStones.count, 2)
         XCTAssertEqual(placedBlackStone, player)
     }
 
     func testGetStone_returnsNothing_whenBoardIsNew() throws {
-        XCTAssertEqual(try sut.getStone(intersection: .zero), .nothing)
+        XCTAssertEqual(try board.getStone(intersection: .zero), .nothing)
     }
 
     func testGetStone_returnsTheStone_whenAStoneIsPlaced() throws {
         let player = randomPlayer()
         let intersection: Intersection = .zero
-        try sut.placeStone(intersection: intersection, player: player)
+        try board.placeStone(intersection: intersection, player: player)
 
-        XCTAssertEqual(try sut.getStone(intersection: intersection), player)
+        XCTAssertEqual(try board.getStone(intersection: intersection), player)
     }
 
     func testPlaceStone_throwsError_whenIntersectionIsOccupied() throws {
         let expectedError = BoardError.PlaceOccupied
         let intersection: Intersection = .zero
 
-        try sut.placeStone(intersection: intersection, player: .white)
+        try board.placeStone(intersection: intersection, player: .white)
 
         XCTAssertThrowsError(
-            try sut.placeStone(intersection: intersection, player: .black),
+            try board.placeStone(intersection: intersection, player: .black),
             expectedError.localizedDescription
         ) { error in
 
@@ -80,14 +76,14 @@ final class BoardTest: XCTestCase {
             Intersection(row: -1, column: -1),
             Intersection(row: 0, column: -1),
             Intersection(row: -1, column: 0),
-            Intersection(row: Board.Config.HEIGHT, column: Board.Config.WIDTH),
-            Intersection(row: 0, column: Board.Config.WIDTH),
-            Intersection(row: Board.Config.HEIGHT, column: 0),
+            Intersection(row: board.NUMBER_OF_ROWS, column: board.NUMBER_OF_COLUMNS),
+            Intersection(row: 0, column: board.NUMBER_OF_COLUMNS),
+            Intersection(row: board.NUMBER_OF_ROWS, column: 0),
         ]
 
         func assertPlaceStoneThrowsErrorAt(intersection: Intersection) {
             XCTAssertThrowsError(
-                try sut.placeStone(intersection: intersection, player: randomPlayer()),
+                try board.placeStone(intersection: intersection, player: randomPlayer()),
                 expectedError.localizedDescription
             ) { error in
 
@@ -103,6 +99,6 @@ final class BoardTest: XCTestCase {
         for invalidIntersection in invalidIntersections {
             assertPlaceStoneThrowsErrorAt(intersection: invalidIntersection)
         }
-        XCTAssertEqual(sut.placedStones.count, 0)
+        XCTAssertEqual(board.placedStones.count, 0)
     }
 }
