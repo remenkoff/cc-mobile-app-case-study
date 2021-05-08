@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3AF1305630C01BED8BA6197D /* GomokuRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1381F8D45B4C3C9697825 /* GomokuRules.swift */; };
+		3AF131354E44A23C74CDF1AA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF13704402452CFED08BFD4 /* Common.swift */; };
+		3AF135239A99DB2970C6B1A7 /* Intersection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1350C0AB9498CCB982D70 /* Intersection.swift */; };
+		3AF13F07406A83762F1D13D5 /* GomokuRulesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1370D9AC73FC630E5E823 /* GomokuRulesTest.swift */; };
 		C97EDD58264522F60023445A /* BoardError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97EDD57264522F60023445A /* BoardError.swift */; };
 		C9C03F492644E99700F7264B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C03F482644E99700F7264B /* AppDelegate.swift */; };
 		C9C03F4B2644E99700F7264B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C03F4A2644E99700F7264B /* SceneDelegate.swift */; };
@@ -38,6 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3AF1350C0AB9498CCB982D70 /* Intersection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intersection.swift; sourceTree = "<group>"; };
+		3AF13704402452CFED08BFD4 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		3AF1370D9AC73FC630E5E823 /* GomokuRulesTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GomokuRulesTest.swift; sourceTree = "<group>"; };
+		3AF1381F8D45B4C3C9697825 /* GomokuRules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GomokuRules.swift; sourceTree = "<group>"; };
 		C97EDD57264522F60023445A /* BoardError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardError.swift; sourceTree = "<group>"; };
 		C9C03F452644E99700F7264B /* Gomoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gomoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9C03F482644E99700F7264B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +123,8 @@
 				C9C03F7A2644EA9300F7264B /* Board.swift */,
 				C9C03F7C2644F6F900F7264B /* Player.swift */,
 				C97EDD57264522F60023445A /* BoardError.swift */,
+				3AF1381F8D45B4C3C9697825 /* GomokuRules.swift */,
+				3AF1350C0AB9498CCB982D70 /* Intersection.swift */,
 			);
 			path = Gomoku;
 			sourceTree = "<group>";
@@ -124,6 +134,8 @@
 			children = (
 				C9C03F612644E99A00F7264B /* Info.plist */,
 				C9C03F782644EA4E00F7264B /* BoardTest.swift */,
+				3AF1370D9AC73FC630E5E823 /* GomokuRulesTest.swift */,
+				3AF13704402452CFED08BFD4 /* Common.swift */,
 			);
 			path = GomokuTests;
 			sourceTree = "<group>";
@@ -274,6 +286,9 @@
 				C9C03F7B2644EA9300F7264B /* Board.swift in Sources */,
 				C9C03F7D2644F6F900F7264B /* Player.swift in Sources */,
 				C9C03F4B2644E99700F7264B /* SceneDelegate.swift in Sources */,
+				3AF1305630C01BED8BA6197D /* GomokuRules.swift in Sources */,
+				3AF131354E44A23C74CDF1AA /* Common.swift in Sources */,
+				3AF135239A99DB2970C6B1A7 /* Intersection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9C03F792644EA4E00F7264B /* BoardTest.swift in Sources */,
+				3AF13F07406A83762F1D13D5 /* GomokuRulesTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
