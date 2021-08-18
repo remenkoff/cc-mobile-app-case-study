@@ -1,3 +1,3 @@
-enum Player {
-    case nothing, white, black
+enum Player: CaseIterable {
+    case white, black
 }

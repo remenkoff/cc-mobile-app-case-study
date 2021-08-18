@@ -18,54 +18,55 @@ final class GomokuRulesTest: XCTestCase {
     }
 
     func testIsWin_isFalse_whenBoardIsEmpty() {
-        XCTAssertFalse(try isWin())
+        XCTAssertFalse(isWin())
     }
 
-    func testIsWin_isFalse_whenBoardIsNotEmptyButNotWin() throws {
-        try board.placeStone(intersection: .zero, player: randomPlayer())
+    func testIsWin_isFalse_whenBoardIsNotEmptyButNotWin() {
+        board.placeStone(intersection: .zero, player: randomPlayer())
 
-        XCTAssertFalse(try isWin())
+        XCTAssertFalse(isWin())
     }
 
-    func testIsWin_isFalse_whenFourInARowInTheFirstRow() throws {
+    func testIsWin_isFalse_whenFourInARowInTheFirstRow() {
         for xPosition in 0..<4 {
             let intersection = Intersection(row: 0, column: xPosition)
-            try board.placeStone(intersection: intersection, player: .white)
+            board.placeStone(intersection: intersection, player: .white)
         }
 
-        XCTAssertFalse(try isWin())
+        XCTAssertFalse(isWin())
     }
 
-    func testIsWin_isTrue_whenFiveInARowInTheFirstRow() throws {
+    func testIsWin_isTrue_whenFiveInARowInTheFirstRow() {
         for xPosition in 0..<5 {
             let intersection = Intersection(row: 0, column: xPosition)
-            try board.placeStone(intersection: intersection, player: .white)
+            board.placeStone(intersection: intersection, player: .white)
         }
 
-        XCTAssertTrue(try isWin())
+        XCTAssertTrue(isWin())
     }
 
-    func testIsWin_isTrue_whenSixInARowInTheFirstRow() throws {
+    func testIsWin_isTrue_whenSixInARowInTheFirstRow() {
         for xPosition in 0..<6 {
             let intersection = Intersection(row: 0, column: xPosition)
-            try board.placeStone(intersection: intersection, player: .white)
+            board.placeStone(intersection: intersection, player: .white)
         }
 
-        XCTAssertTrue(try isWin())
+        XCTAssertTrue(isWin())
     }
 
-    func testIsWin_isTrue_whenFiveInARowInAnyRow() throws {
-        for yPosition in 0..<board.NUMBER_OF_ROWS {
+    func testIsWin_isTrue_whenFiveInARowInAnyRow() {
+        for row in 0..<board.NUMBER_OF_ROWS {
             board = Board()
-            for xPosition in 0..<5 {
-                let intersection = Intersection(row: yPosition, column: xPosition)
-                try board.placeStone(intersection: intersection, player: .white)
+            for column in 0..<5 {
+                let intersection = Intersection(row: row, column: column)
+                board.placeStone(intersection: intersection, player: .white)
             }
-            XCTAssertTrue(try isWin())
+
+            XCTAssertTrue(isWin())
         }
     }
 
-    private func isWin() throws -> Bool {
-        try rules.isWin(board: board)
+    private func isWin() -> Bool {
+        rules.isWin(board: board)
     }
 }

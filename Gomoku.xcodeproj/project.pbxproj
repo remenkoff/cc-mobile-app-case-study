@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3AF1305630C01BED8BA6197D /* GomokuRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1381F8D45B4C3C9697825 /* GomokuRules.swift */; };
 		3AF132BB400916B0F3D99704 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF136ACB5D1C046939B188D /* View.swift */; };
-		3AF1334EB15A7CF2E5C46C29 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF135D07932FC557BE8AC1B /* Color.swift */; };
 		3AF135159E69E5D9621DE819 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF139328F8498848AE99906 /* main.swift */; };
 		3AF135239A99DB2970C6B1A7 /* Intersection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1350C0AB9498CCB982D70 /* Intersection.swift */; };
 		3AF13DE00091BF17F5AB4098 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF13BAA425F8E2F8C37B602 /* GridView.swift */; };
@@ -33,7 +32,6 @@
 
 /* Begin PBXFileReference section */
 		3AF1350C0AB9498CCB982D70 /* Intersection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intersection.swift; sourceTree = "<group>"; };
-		3AF135D07932FC557BE8AC1B /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		3AF136ACB5D1C046939B188D /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		3AF13704402452CFED08BFD4 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		3AF1370D9AC73FC630E5E823 /* GomokuRulesTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GomokuRulesTest.swift; sourceTree = "<group>"; };
@@ -108,7 +106,6 @@
 				3AF13BAA425F8E2F8C37B602 /* GridView.swift */,
 				3AF136ACB5D1C046939B188D /* View.swift */,
 				3AF139328F8498848AE99906 /* main.swift */,
-				3AF135D07932FC557BE8AC1B /* Color.swift */,
 			);
 			path = Gomoku;
 			sourceTree = "<group>";
@@ -234,7 +231,6 @@
 				3AF132BB400916B0F3D99704 /* View.swift in Sources */,
 				3AF135159E69E5D9621DE819 /* main.swift in Sources */,
 				C91582C726CD92EA00E89398 /* Application.swift in Sources */,
-				3AF1334EB15A7CF2E5C46C29 /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

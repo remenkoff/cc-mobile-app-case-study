@@ -1,6 +1,7 @@
 enum BoardError: Error {
-    case PlaceOccupied
-    case BadLocation
+    case placeOccupied
+    case badLocation
+    case stoneNotFound
 
     var localizedDescription: String {
         "\(BoardError.self).\(self)"

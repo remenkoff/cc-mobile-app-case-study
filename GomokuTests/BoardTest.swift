@@ -18,60 +18,58 @@ final class BoardTest: XCTestCase {
         XCTAssertEqual(board.placedStones.count, 0)
     }
 
-    func testPlaceStone_addsTheSameAndTheOnlyOneStone() throws {
+    func testPlaceStone_addsTheSameAndTheOnlyOneStone() {
         var intersection = Intersection(row: 1, column: 1)
-        var player = Player.white
+        var player: Player = .white
 
-        try board.placeStone(intersection: intersection, player: player)
-        let placedWhiteStone = try board.getStone(intersection: intersection)
+        board.placeStone(intersection: intersection, player: player)
 
+        XCTAssertEqual(try! board.getStone(intersection: intersection).get(), player)
         XCTAssertEqual(board.placedStones.count, 1)
-        XCTAssertEqual(placedWhiteStone, player)
 
         intersection = .zero
         player = .black
 
-        try board.placeStone(intersection: intersection, player: player)
-        let placedBlackStone = try board.getStone(intersection: intersection)
+        board.placeStone(intersection: intersection, player: player)
 
+        XCTAssertEqual(try! board.getStone(intersection: intersection).get(), player)
         XCTAssertEqual(board.placedStones.count, 2)
-        XCTAssertEqual(placedBlackStone, player)
     }
 
-    func testGetStone_returnsNothing_whenBoardIsNew() throws {
-        XCTAssertEqual(try board.getStone(intersection: .zero), .nothing)
-    }
+    func testGetStone_fails_whenBoardIsNew() {
+        let expectedError = BoardError.stoneNotFound
 
-    func testGetStone_returnsTheStone_whenAStoneIsPlaced() throws {
-        let player = randomPlayer()
-        let intersection: Intersection = .zero
-        try board.placeStone(intersection: intersection, player: player)
-
-        XCTAssertEqual(try board.getStone(intersection: intersection), player)
-    }
-
-    func testPlaceStone_throwsError_whenIntersectionIsOccupied() throws {
-        let expectedError = BoardError.PlaceOccupied
-        let intersection: Intersection = .zero
-
-        try board.placeStone(intersection: intersection, player: .white)
-
-        XCTAssertThrowsError(
-            try board.placeStone(intersection: intersection, player: .black),
-            expectedError.localizedDescription
-        ) { error in
-
-            guard let thrownError = error as? BoardError else {
-                XCTFail("An error of the \(BoardError.self) type was expected to be thrown.")
-                return
-            }
-
-            XCTAssertEqual(thrownError, expectedError)
+        switch board.getStone(intersection: .zero) {
+            case .success: XCTFail("Failure result with `\(expectedError)` error was expected, but result succeeded.")
+            case .failure(let error): XCTAssertEqual(error, expectedError)
         }
     }
 
-    func testPlaceStone_throwsError_whenIntersectionIsOutsideBounds() throws {
-        let expectedError = BoardError.BadLocation
+    func testGetStone_returnsStone_whenPlaced() {
+        let player = randomPlayer()
+        let intersection: Intersection = .zero
+
+        board.placeStone(intersection: intersection, player: player)
+
+        XCTAssertEqual(try! board.getStone(intersection: intersection).get(), player)
+    }
+
+    func testPlaceStone_fails_whenIntersectionIsOccupied() {
+        let expectedError = BoardError.placeOccupied
+        let intersection: Intersection = .zero
+
+        board.placeStone(intersection: intersection, player: .white)
+
+        switch board.placeStone(intersection: intersection, player: .white) {
+            case .success:
+                XCTFail("Failure result with `\(expectedError)` error was expected, but result succeeded.")
+            case .failure(let error):
+                XCTAssertEqual(error, expectedError)
+        }
+    }
+
+    func testPlaceStone_fails_whenIntersectionIsOutsideBounds() {
+        let expectedError: BoardError = .badLocation
         let invalidIntersections = [
             Intersection(row: -1, column: -1),
             Intersection(row: 0, column: -1),
@@ -81,24 +79,20 @@ final class BoardTest: XCTestCase {
             Intersection(row: board.NUMBER_OF_ROWS, column: 0),
         ]
 
-        func assertPlaceStoneThrowsErrorAt(intersection: Intersection) {
-            XCTAssertThrowsError(
-                try board.placeStone(intersection: intersection, player: randomPlayer()),
-                expectedError.localizedDescription
-            ) { error in
-
-                guard let thrownError = error as? BoardError else {
-                    XCTFail("An error of the \(BoardError.self) type was expected to be thrown.")
-                    return
-                }
-
-                XCTAssertEqual(thrownError, expectedError)
-            }
-        }
-
         for invalidIntersection in invalidIntersections {
-            assertPlaceStoneThrowsErrorAt(intersection: invalidIntersection)
+            assertPlaceStoneFailsAt(intersection: invalidIntersection, expectedError: expectedError)
         }
         XCTAssertEqual(board.placedStones.count, 0)
+    }
+
+    private func assertPlaceStoneFailsAt(intersection: Intersection, expectedError: BoardError) {
+        let result = board.placeStone(intersection: intersection, player: randomPlayer())
+        XCTAssertThrowsError(try result.get())
+        switch result {
+            case .success:
+                XCTFail("Failure result with `\(expectedError)` error was expected, but result succeeded.")
+            case .failure(let error):
+                XCTAssertEqual(error, expectedError)
+        }
     }
 }

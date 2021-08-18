@@ -3,6 +3,6 @@ struct Intersection {
     let column: Int
 
     static var zero: Intersection {
-        Intersection(row: 0, column: 0)
+        .init(row: 0, column: 0)
     }
 }

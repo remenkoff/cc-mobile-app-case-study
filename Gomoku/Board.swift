@@ -1,32 +1,47 @@
 final class Board {
+    typealias BoardLocation = Int
+
     let NUMBER_OF_COLUMNS = 19
     let NUMBER_OF_ROWS = 19
-    var placedStones = [Int: Player]()
+    private(set) var placedStones = [BoardLocation: Player]()
 
-    func placeStone(intersection: Intersection, player: Player) throws {
-        let location = try makeLocation(intersection: intersection)
-        guard placedStones[location] == nil else {
-            throw BoardError.PlaceOccupied
+    @discardableResult
+    func placeStone(intersection: Intersection, player: Player) -> Result<Void, BoardError> {
+        switch makeLocation(intersection: intersection) {
+            case .success(let location):
+                if let _ = placedStones[location] {
+                    return .failure(.placeOccupied)
+                }
+                placedStones[location] = player
+
+            case .failure(let error):
+                return .failure(error)
         }
-        placedStones[location] = player
+        return .success(Void())
     }
 
-    func getStone(intersection: Intersection) throws -> Player {
-        let location = try makeLocation(intersection: intersection)
-        if let stone = placedStones[location] {
-            return stone
+    func getStone(intersection: Intersection) -> Result<Player, BoardError> {
+        switch makeLocation(intersection: intersection) {
+            case .success(let location):
+                if let stone = placedStones[location] {
+                    return .success(stone)
+                } else {
+                    return .failure(.stoneNotFound)
+                }
+            case .failure(let error):
+                return .failure(error)
         }
-        return .nothing
     }
 
-    private func makeLocation(intersection: Intersection) throws -> Int {
-        guard isLocationValid(row: intersection.row, column: intersection.column) else {
-            throw BoardError.BadLocation
+    private func makeLocation(intersection: Intersection) -> Result<BoardLocation, BoardError> {
+        if isNotValidLocation(intersection: intersection) {
+            return .failure(.badLocation)
         }
-        return intersection.column * NUMBER_OF_COLUMNS + intersection.row
+        let intersection = intersection.column * NUMBER_OF_COLUMNS + intersection.row
+        return .success(intersection)
     }
 
-    private func isLocationValid(row: Int, column: Int) -> Bool {
-        (0..<NUMBER_OF_ROWS).contains(row) && (0..<NUMBER_OF_COLUMNS).contains(column)
+    private func isNotValidLocation(intersection: Intersection) -> Bool {
+        !((0..<NUMBER_OF_ROWS).contains(intersection.row) && (0..<NUMBER_OF_COLUMNS).contains(intersection.column))
     }
 }

@@ -1,3 +1,3 @@
 func randomPlayer() -> Player {
-    Bool.random() ? .white : .black
+    Player.allCases.randomElement()!
 }
