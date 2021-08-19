@@ -3,16 +3,16 @@ final class Board {
 
     let NUMBER_OF_COLUMNS = 19
     let NUMBER_OF_ROWS = 19
-    private(set) var placedStones = [BoardLocation: Player]()
+    private(set) var placedStones = [BoardLocation: Stone]()
 
     @discardableResult
-    func placeStone(_ intersection: Intersection, _ player: Player) -> Result<Void, BoardError> {
+    func placeStone(_ intersection: Intersection, _ stone: Stone) -> Result<Void, BoardError> {
         switch makeLocation(intersection) {
             case .success(let location):
                 if let _ = placedStones[location] {
                     return .failure(.placeOccupied)
                 }
-                placedStones[location] = player
+                placedStones[location] = stone
 
             case .failure(let error):
                 return .failure(error)
@@ -20,7 +20,7 @@ final class Board {
         return .success(Void())
     }
 
-    func getStone(_ intersection: Intersection) -> Result<Player, BoardError> {
+    func getStone(_ intersection: Intersection) -> Result<Stone, BoardError> {
         switch makeLocation(intersection) {
             case .success(let location):
                 if let stone = placedStones[location] {

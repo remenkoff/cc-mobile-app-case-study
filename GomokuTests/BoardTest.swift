@@ -20,19 +20,19 @@ final class BoardTest: XCTestCase {
 
     func testPlaceStone_addsTheSameAndTheOnlyOneStone() {
         var intersection = Intersection(1, 1)
-        var player: Player = .white
+        var stone: Stone = .white
 
-        board.placeStone(intersection, player)
+        board.placeStone(intersection, stone)
 
-        XCTAssertEqual(try! board.getStone(intersection).get(), player)
+        XCTAssertEqual(try! board.getStone(intersection).get(), stone)
         XCTAssertEqual(board.placedStones.count, 1)
 
         intersection = .zero
-        player = .black
+        stone = .black
 
-        board.placeStone(intersection, player)
+        board.placeStone(intersection, stone)
 
-        XCTAssertEqual(try! board.getStone(intersection).get(), player)
+        XCTAssertEqual(try! board.getStone(intersection).get(), stone)
         XCTAssertEqual(board.placedStones.count, 2)
     }
 
@@ -46,12 +46,12 @@ final class BoardTest: XCTestCase {
     }
 
     func testGetStone_returnsStone_whenPlaced() {
-        let player = randomPlayer()
+        let stone = randomStone()
         let intersection: Intersection = .zero
 
-        board.placeStone(intersection, player)
+        board.placeStone(intersection, stone)
 
-        XCTAssertEqual(try! board.getStone(intersection).get(), player)
+        XCTAssertEqual(try! board.getStone(intersection).get(), stone)
     }
 
     func testPlaceStone_fails_whenIntersectionIsOccupied() {
@@ -86,7 +86,7 @@ final class BoardTest: XCTestCase {
     }
 
     private func assertPlaceStoneFailsAt(intersection: Intersection, expectedError: BoardError) {
-        let result = board.placeStone(intersection, randomPlayer())
+        let result = board.placeStone(intersection, randomStone())
         XCTAssertThrowsError(try result.get())
         switch result {
             case .success:

@@ -13,7 +13,7 @@ final class GridView: UIView {
         cellCount = board.NUMBER_OF_COLUMNS + 1
         cellSize = boardWidth / CGFloat(cellCount)
         super.init(frame: frame)
-        backgroundColor = .init(red: 0.8, green: 0.6, blue: 0.4, alpha: 1.0)
+        backgroundColor = .init(red: 0.9, green: 0.7, blue: 0.5, alpha: 1.0)
         addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(onTap(_:))))
     }
 
@@ -53,8 +53,8 @@ final class GridView: UIView {
     private func drawStones() {
         for column in 0..<board.NUMBER_OF_COLUMNS {
             for row in 0..<board.NUMBER_OF_ROWS {
-                let loc = Intersection(row, column)
-                guard let stone = try? board.getStone(loc).get() else {
+                let intersection = Intersection(row, column)
+                guard let stone = try? board.getStone(intersection).get() else {
                     continue
                 }
 
@@ -63,8 +63,8 @@ final class GridView: UIView {
                     case .black: UIColor.black.setFill()
                 }
 
-                let centerX = CGFloat(loc.column) * cellSize + cellSize
-                let centerY = CGFloat(loc.row) * cellSize + cellSize
+                let centerX = CGFloat(intersection.column) * cellSize + cellSize
+                let centerY = CGFloat(intersection.row) * cellSize + cellSize
                 let center = CGPoint(x: centerX, y: centerY)
                 let radius = cellSize / stoneSizeFactor
 

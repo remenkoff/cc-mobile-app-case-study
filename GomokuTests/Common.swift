@@ -1,3 +1,3 @@
-func randomPlayer() -> Player {
-    Player.allCases.randomElement()!
+func randomStone() -> Stone {
+    Stone.allCases.randomElement()!
 }

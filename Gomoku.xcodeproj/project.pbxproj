@@ -18,7 +18,7 @@
 		C97EDD58264522F60023445A /* BoardError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97EDD57264522F60023445A /* BoardError.swift */; };
 		C9BFCAF62647853E007EED8B /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C03F7A2644EA9300F7264B /* Board.swift */; };
 		C9BFCAF72647853E007EED8B /* GomokuRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1381F8D45B4C3C9697825 /* GomokuRules.swift */; };
-		C9BFCAF8264785B9007EED8B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C03F7C2644F6F900F7264B /* Player.swift */; };
+		C9BFCAF8264785B9007EED8B /* Stone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C03F7C2644F6F900F7264B /* Stone.swift */; };
 		C9BFCAF9264785C3007EED8B /* BoardError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97EDD57264522F60023445A /* BoardError.swift */; };
 		C9BFCAFA264785DE007EED8B /* Intersection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1350C0AB9498CCB982D70 /* Intersection.swift */; };
 		C9BFCAFB264785DE007EED8B /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF13704402452CFED08BFD4 /* Common.swift */; };
@@ -27,7 +27,7 @@
 		C9C03F522644E99900F7264B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9C03F512644E99900F7264B /* Assets.xcassets */; };
 		C9C03F792644EA4E00F7264B /* BoardTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C03F782644EA4E00F7264B /* BoardTest.swift */; };
 		C9C03F7B2644EA9300F7264B /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C03F7A2644EA9300F7264B /* Board.swift */; };
-		C9C03F7D2644F6F900F7264B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C03F7C2644F6F900F7264B /* Player.swift */; };
+		C9C03F7D2644F6F900F7264B /* Stone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C03F7C2644F6F900F7264B /* Stone.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +50,7 @@
 		C9C03F612644E99A00F7264B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9C03F782644EA4E00F7264B /* BoardTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTest.swift; sourceTree = "<group>"; };
 		C9C03F7A2644EA9300F7264B /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
-		C9C03F7C2644F6F900F7264B /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		C9C03F7C2644F6F900F7264B /* Stone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stone.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +99,7 @@
 				C9C03F542644E99900F7264B /* LaunchScreen.storyboard */,
 				C9C03F562644E99900F7264B /* Info.plist */,
 				C9C03F7A2644EA9300F7264B /* Board.swift */,
-				C9C03F7C2644F6F900F7264B /* Player.swift */,
+				C9C03F7C2644F6F900F7264B /* Stone.swift */,
 				C97EDD57264522F60023445A /* BoardError.swift */,
 				3AF1381F8D45B4C3C9697825 /* GomokuRules.swift */,
 				3AF1350C0AB9498CCB982D70 /* Intersection.swift */,
@@ -224,7 +224,7 @@
 				C97EDD58264522F60023445A /* BoardError.swift in Sources */,
 				C9C03F492644E99700F7264B /* AppDelegate.swift in Sources */,
 				C9C03F7B2644EA9300F7264B /* Board.swift in Sources */,
-				C9C03F7D2644F6F900F7264B /* Player.swift in Sources */,
+				C9C03F7D2644F6F900F7264B /* Stone.swift in Sources */,
 				3AF1305630C01BED8BA6197D /* GomokuRules.swift in Sources */,
 				3AF135239A99DB2970C6B1A7 /* Intersection.swift in Sources */,
 				3AF13DE00091BF17F5AB4098 /* GridView.swift in Sources */,
@@ -244,7 +244,7 @@
 				C9BFCAF9264785C3007EED8B /* BoardError.swift in Sources */,
 				C9BFCAF72647853E007EED8B /* GomokuRules.swift in Sources */,
 				C9C03F792644EA4E00F7264B /* BoardTest.swift in Sources */,
-				C9BFCAF8264785B9007EED8B /* Player.swift in Sources */,
+				C9BFCAF8264785B9007EED8B /* Stone.swift in Sources */,
 				3AF13F07406A83762F1D13D5 /* GomokuRulesTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

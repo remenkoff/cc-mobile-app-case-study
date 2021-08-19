@@ -22,7 +22,7 @@ final class GomokuRulesTest: XCTestCase {
     }
 
     func testIsWin_isFalse_whenBoardIsNotEmptyButNotWin() {
-        board.placeStone(.zero, randomPlayer())
+        board.placeStone(.zero, randomStone())
 
         XCTAssertFalse(isWin())
     }
