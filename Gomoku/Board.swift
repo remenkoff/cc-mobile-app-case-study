@@ -3,6 +3,7 @@ final class Board {
 
     let NUMBER_OF_COLUMNS = 19
     let NUMBER_OF_ROWS = 19
+
     private(set) var placedStones = [BoardLocation: Stone]()
 
     @discardableResult

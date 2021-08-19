@@ -1,7 +1,6 @@
 import XCTest
 
 final class BoardTest: XCTestCase {
-
     private var board: Board!
 
     override func setUp() {
@@ -37,9 +36,18 @@ final class BoardTest: XCTestCase {
     }
 
     func testGetStone_fails_whenBoardIsNew() {
-        let expectedError = BoardError.stoneNotFound
+        let expectedError: BoardError = .stoneNotFound
 
         switch board.getStone(.zero) {
+            case .success: XCTFail("Failure result with `\(expectedError)` error was expected, but result succeeded.")
+            case .failure(let error): XCTAssertEqual(error, expectedError)
+        }
+    }
+    
+    func testGetStone_fails_whenInvalidIntersectionProvided() {
+        let expectedError: BoardError = .badLocation
+
+        switch board.getStone(Intersection(-1, -1)) {
             case .success: XCTFail("Failure result with `\(expectedError)` error was expected, but result succeeded.")
             case .failure(let error): XCTAssertEqual(error, expectedError)
         }
@@ -55,7 +63,7 @@ final class BoardTest: XCTestCase {
     }
 
     func testPlaceStone_fails_whenIntersectionIsOccupied() {
-        let expectedError = BoardError.placeOccupied
+        let expectedError: BoardError = .placeOccupied
         let intersection: Intersection = .zero
 
         board.placeStone(intersection, .white)

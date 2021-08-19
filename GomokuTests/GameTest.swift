@@ -17,9 +17,7 @@ final class GameTest: XCTestCase {
     }
 
     func testWhoseTurn_returnsBlackStone_whenGameStarts() {
-        let expectedStone: Stone = .black
-
-        XCTAssertEqual(game.whoseTurn, expectedStone)
+        XCTAssertEqual(game.whoseTurn, .black)
     }
 
     func testTakeTurn_makesOtherStonesTurn_afterTurn() {

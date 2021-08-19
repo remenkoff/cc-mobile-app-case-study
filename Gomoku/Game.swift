@@ -1,7 +1,6 @@
 final class Game {
-    let board: Board
     private let rules: GomokuRules
-
+    let board: Board
     private(set) var whoseTurn: Stone = .black
 
     init(_ board: Board, _ rules: GomokuRules) {

@@ -1,5 +1,6 @@
 final class GomokuRules {
     let numberOfStonesForWin = 5
+
     func isWin(_ board: Board) -> Bool {
         for row in 0..<board.NUMBER_OF_ROWS {
             var stonesInARow: [Stone: Int] = [.white: 0, .black: 0]

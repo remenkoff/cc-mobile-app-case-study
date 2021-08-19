@@ -1,7 +1,6 @@
 import XCTest
 
 final class GomokuRulesTest: XCTestCase {
-    
     private var board: Board!
     private var rules: GomokuRules!
 
