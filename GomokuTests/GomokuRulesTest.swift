@@ -22,33 +22,33 @@ final class GomokuRulesTest: XCTestCase {
     }
 
     func testIsWin_isFalse_whenBoardIsNotEmptyButNotWin() {
-        board.placeStone(intersection: .zero, player: randomPlayer())
+        board.placeStone(.zero, randomPlayer())
 
         XCTAssertFalse(isWin())
     }
 
     func testIsWin_isFalse_whenFourInARowInTheFirstRow() {
-        for xPosition in 0..<4 {
-            let intersection = Intersection(row: 0, column: xPosition)
-            board.placeStone(intersection: intersection, player: .white)
+        for column in 0..<4 {
+            let intersection = Intersection(0, column)
+            board.placeStone(intersection, .white)
         }
 
         XCTAssertFalse(isWin())
     }
 
     func testIsWin_isTrue_whenFiveInARowInTheFirstRow() {
-        for xPosition in 0..<5 {
-            let intersection = Intersection(row: 0, column: xPosition)
-            board.placeStone(intersection: intersection, player: .white)
+        for column in 0..<rules.numberOfStonesForWin {
+            let intersection = Intersection(0, column)
+            board.placeStone(intersection, .white)
         }
 
         XCTAssertTrue(isWin())
     }
 
     func testIsWin_isTrue_whenSixInARowInTheFirstRow() {
-        for xPosition in 0..<6 {
-            let intersection = Intersection(row: 0, column: xPosition)
-            board.placeStone(intersection: intersection, player: .white)
+        for column in 0..<6 {
+            let intersection = Intersection(0, column)
+            board.placeStone(intersection, .white)
         }
 
         XCTAssertTrue(isWin())
@@ -57,9 +57,9 @@ final class GomokuRulesTest: XCTestCase {
     func testIsWin_isTrue_whenFiveInARowInAnyRow() {
         for row in 0..<board.NUMBER_OF_ROWS {
             board = Board()
-            for column in 0..<5 {
-                let intersection = Intersection(row: row, column: column)
-                board.placeStone(intersection: intersection, player: .white)
+            for column in 0..<rules.numberOfStonesForWin {
+                let intersection = Intersection(row, column)
+                board.placeStone(intersection, .white)
             }
 
             XCTAssertTrue(isWin())
@@ -67,6 +67,6 @@ final class GomokuRulesTest: XCTestCase {
     }
 
     private func isWin() -> Bool {
-        rules.isWin(board: board)
+        rules.isWin(board)
     }
 }

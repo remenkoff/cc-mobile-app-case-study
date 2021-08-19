@@ -7,14 +7,14 @@ final class GridView: UIView {
     private let cellSize: CGFloat
     private let stoneSizeFactor: CGFloat = 2.4
 
-    init(board: Board, frame: CGRect) {
+    init(_ board: Board, _ frame: CGRect) {
         self.board = board
         boardWidth = min(frame.width, frame.height)
         cellCount = board.NUMBER_OF_COLUMNS + 1
         cellSize = boardWidth / CGFloat(cellCount)
         super.init(frame: frame)
         backgroundColor = .init(red: 0.8, green: 0.6, blue: 0.4, alpha: 1.0)
-        addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(onTap(recognizer:))))
+        addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(onTap(_:))))
     }
 
     required init?(coder: NSCoder) {
@@ -53,8 +53,8 @@ final class GridView: UIView {
     private func drawStones() {
         for column in 0..<board.NUMBER_OF_COLUMNS {
             for row in 0..<board.NUMBER_OF_ROWS {
-                let loc = Intersection(row: row, column: column)
-                guard let stone = try? board.getStone(intersection: loc).get() else {
+                let loc = Intersection(row, column)
+                guard let stone = try? board.getStone(loc).get() else {
                     continue
                 }
 
@@ -82,12 +82,12 @@ final class GridView: UIView {
         }
     }
 
-    @objc func onTap(recognizer: UITapGestureRecognizer) {
+    @objc func onTap(_ recognizer: UITapGestureRecognizer) {
         let recognizedLocation = recognizer.location(in: self)
         let tappedRow = Int(round((recognizedLocation.y - cellSize) / cellSize))
         let tappedColumn = Int(round((recognizedLocation.x - cellSize) / cellSize))
-        let tappedIntersection = Intersection(row: tappedRow, column: tappedColumn)
-        board.placeStone(intersection: tappedIntersection, player: .white)
+        let tappedIntersection = Intersection(tappedRow, tappedColumn)
+        board.placeStone(tappedIntersection, .white)
         setNeedsDisplay()
     }
 }

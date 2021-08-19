@@ -6,8 +6,8 @@ final class Board {
     private(set) var placedStones = [BoardLocation: Player]()
 
     @discardableResult
-    func placeStone(intersection: Intersection, player: Player) -> Result<Void, BoardError> {
-        switch makeLocation(intersection: intersection) {
+    func placeStone(_ intersection: Intersection, _ player: Player) -> Result<Void, BoardError> {
+        switch makeLocation(intersection) {
             case .success(let location):
                 if let _ = placedStones[location] {
                     return .failure(.placeOccupied)
@@ -20,8 +20,8 @@ final class Board {
         return .success(Void())
     }
 
-    func getStone(intersection: Intersection) -> Result<Player, BoardError> {
-        switch makeLocation(intersection: intersection) {
+    func getStone(_ intersection: Intersection) -> Result<Player, BoardError> {
+        switch makeLocation(intersection) {
             case .success(let location):
                 if let stone = placedStones[location] {
                     return .success(stone)
@@ -33,15 +33,15 @@ final class Board {
         }
     }
 
-    private func makeLocation(intersection: Intersection) -> Result<BoardLocation, BoardError> {
-        if isNotValidLocation(intersection: intersection) {
+    private func makeLocation(_ intersection: Intersection) -> Result<BoardLocation, BoardError> {
+        if isNotValidLocation(intersection) {
             return .failure(.badLocation)
         }
         let intersection = intersection.column * NUMBER_OF_COLUMNS + intersection.row
         return .success(intersection)
     }
 
-    private func isNotValidLocation(intersection: Intersection) -> Bool {
+    private func isNotValidLocation(_ intersection: Intersection) -> Bool {
         !((0..<NUMBER_OF_ROWS).contains(intersection.row) && (0..<NUMBER_OF_COLUMNS).contains(intersection.column))
     }
 }
