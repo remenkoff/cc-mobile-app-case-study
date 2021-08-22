@@ -1,5 +1,5 @@
 final class GomokuRules {
-    enum Axis {
+    private enum Axis {
         case horizontal, vertical
     }
 
@@ -10,8 +10,8 @@ final class GomokuRules {
     }
 
     private func isDimensionWin(_ axis: Axis, _ board: Board, _ stone: Stone) -> Bool {
-        let maxWidth = axis == .horizontal ? board.NUMBER_OF_ROWS : board.NUMBER_OF_COLUMNS
-        let maxHeight = axis == .vertical ? board.NUMBER_OF_COLUMNS : board.NUMBER_OF_ROWS
+        let maxWidth = axis == .horizontal ? board.numberOfRows : board.numberOfCols
+        let maxHeight = axis == .vertical ? board.numberOfCols : board.numberOfRows
 
         for row in 0..<maxWidth {
             var numberOfConsecutiveStones = 0

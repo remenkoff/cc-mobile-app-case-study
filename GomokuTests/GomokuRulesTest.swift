@@ -6,7 +6,7 @@ final class GomokuRulesTest: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        board = Board()
+        board = BoardData()
         rules = GomokuRules()
     }
 
@@ -70,8 +70,8 @@ final class GomokuRulesTest: XCTestCase {
     func testIsWin_isTrue_whenFiveInARowInAnyRow() {
         let stone = randomStone()
 
-        for row in 0..<board.NUMBER_OF_ROWS {
-            board = Board()
+        for row in 0..<board.numberOfRows {
+            board = BoardData()
 
             for column in 0..<rules.numberOfStonesForWin {
                 board.placeStone(Intersection(row, column), stone)
@@ -101,8 +101,8 @@ final class GomokuRulesTest: XCTestCase {
     func testIsWin_isTrue_whenFiveInARowInAnyColumn() {
         let stone = randomStone()
 
-        for column in 0..<board.NUMBER_OF_COLUMNS {
-            board = Board()
+        for column in 0..<board.numberOfCols {
+            board = BoardData()
 
             for row in 0..<rules.numberOfStonesForWin {
                 board.placeStone(Intersection(row, column), stone)
@@ -132,7 +132,7 @@ final class GomokuRulesTest: XCTestCase {
     func testIsWin_isTrue_whenFiveConsecutiveInColumn() {
         let stone = randomStone()
 
-        for column in 0..<board.NUMBER_OF_COLUMNS {
+        for column in 0..<board.numberOfCols {
             board.placeStone(Intersection(0, column), stone)
         }
 

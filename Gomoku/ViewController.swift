@@ -1,7 +1,10 @@
 import UIKit
 
 final class ViewController: UIViewController {
-    private let game = Game(Board(), GomokuRules())
+    private lazy var game: Game = {
+        Game(board, GomokuRules())
+    }()
+    private let board = BoardData()
     private let presenter = GamePresenter()
 
     private lazy var gridView: GridView = {
@@ -9,7 +12,7 @@ final class ViewController: UIViewController {
         let frame = CGRect(x: 0.0, y: 200.0, width: minSideLength, height: minSideLength)
 
         let onStoneColorNeeded: GridView.StoneNeededCompletion = { [weak self] intersection in
-            guard let stone = try? self?.game.board.getStone(intersection).get() else { return nil }
+            guard let stone = try? self?.board.getStone(intersection).get() else { return nil }
             switch stone {
                 case .white: return .white
                 case .black: return .black
@@ -23,8 +26,8 @@ final class ViewController: UIViewController {
         }
 
         let gridView = GridView(
-            game.board.NUMBER_OF_ROWS,
-            game.board.NUMBER_OF_COLUMNS,
+            board.numberOfRows,
+            board.numberOfCols,
             frame,
             onStoneColorNeeded,
             onIntersectionTapRecognized

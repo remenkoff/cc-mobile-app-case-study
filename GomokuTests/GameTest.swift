@@ -6,7 +6,7 @@ final class GameTest: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        board = Board()
+        board = BoardData()
         game = Game(board, GomokuRules())
     }
 
@@ -40,7 +40,7 @@ final class GameTest: XCTestCase {
     func testWhoseWin_returnsWhite_whenWhiteWins() {
         let stone: Stone = .white
 
-        for row in 0..<board.NUMBER_OF_ROWS {
+        for row in 0..<board.numberOfRows {
             board.placeStone(Intersection(row, 0), stone)
         }
 
@@ -50,7 +50,7 @@ final class GameTest: XCTestCase {
     func testWhoseWin_returnsBlack_whenBlackWins() {
         let stone: Stone = .black
 
-        for row in 0..<board.NUMBER_OF_ROWS {
+        for row in 0..<board.numberOfRows {
             board.placeStone(Intersection(row, 0), stone)
         }
 

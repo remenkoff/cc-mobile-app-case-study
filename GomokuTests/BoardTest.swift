@@ -5,7 +5,7 @@ final class BoardTest: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        board = Board()
+        board = BoardData()
     }
 
     override func tearDown() {
@@ -14,7 +14,7 @@ final class BoardTest: XCTestCase {
     }
 
     func testPlacedStones_isEmpty_whenBoardIsNew() {
-        XCTAssertEqual(board.placedStones.count, 0)
+        XCTAssertEqual(board.getPlacedStones().count, 0)
     }
 
     func testPlaceStone_addsTheSameAndTheOnlyOneStone() {
@@ -24,7 +24,7 @@ final class BoardTest: XCTestCase {
         board.placeStone(intersection, stone)
 
         XCTAssertEqual(try! board.getStone(intersection).get(), stone)
-        XCTAssertEqual(board.placedStones.count, 1)
+        XCTAssertEqual(board.getPlacedStones().count, 1)
 
         intersection = .zero
         stone = .black
@@ -32,7 +32,7 @@ final class BoardTest: XCTestCase {
         board.placeStone(intersection, stone)
 
         XCTAssertEqual(try! board.getStone(intersection).get(), stone)
-        XCTAssertEqual(board.placedStones.count, 2)
+        XCTAssertEqual(board.getPlacedStones().count, 2)
     }
 
     func testGetStone_fails_whenBoardIsNew() {
@@ -83,9 +83,9 @@ final class BoardTest: XCTestCase {
             Intersection(-1, -1),
             Intersection(0, -1),
             Intersection(-1, 0),
-            Intersection(board.NUMBER_OF_ROWS, board.NUMBER_OF_COLUMNS),
-            Intersection(0, board.NUMBER_OF_COLUMNS),
-            Intersection(board.NUMBER_OF_ROWS, 0),
+            Intersection(board.numberOfRows, board.numberOfCols),
+            Intersection(0, board.numberOfCols),
+            Intersection(board.numberOfRows, 0),
         ]
 
         for invalidIntersection in invalidIntersections {
@@ -98,6 +98,6 @@ final class BoardTest: XCTestCase {
                     XCTAssertEqual(error, expectedError)
             }
         }
-        XCTAssertEqual(board.placedStones.count, 0)
+        XCTAssertEqual(board.getPlacedStones().count, 0)
     }
 }
