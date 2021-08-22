@@ -18,8 +18,13 @@ final class GamePresenterTest: XCTestCase {
         XCTAssertEqual(gamePresenter.getTurnStatusText(.black), "Black's Turn")
     }
 
-    func testGetTurnStatusColor_returnsAppropriateStatusColor() {
-        XCTAssertEqual(gamePresenter.getTurnStatusColor(.white), 0xFFFFFF)
-        XCTAssertEqual(gamePresenter.getTurnStatusColor(.black), 0x000000)
+    func testGetStoneStatusColor_returnsAppropriateStatusColor() {
+        XCTAssertEqual(gamePresenter.getStatusTextColor(.white), 0xFFFFFF)
+        XCTAssertEqual(gamePresenter.getStatusTextColor(.black), 0x000000)
+    }
+
+    func testGetWinStatusText_returnsProperlyFormattedStatusText() {
+        XCTAssertEqual(gamePresenter.getWinStatusText(.white), "White Wins!")
+        XCTAssertEqual(gamePresenter.getWinStatusText(.black), "Black Wins!")
     }
 }

@@ -18,7 +18,6 @@ final class ViewController: UIViewController {
 
         let onIntersectionTapRecognized: GridView.TapRecognizedCompletion = { [weak self] intersection in
             guard let self = self else { return }
-            self.game.board.placeStone(intersection, self.game.whoseTurn)
             self.game.takeTurn(intersection)
             self.updateStatusLabel()
         }
@@ -53,8 +52,14 @@ final class ViewController: UIViewController {
     private func updateStatusLabel() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.statusLabel.textColor = .from(hex: self.presenter.getTurnStatusColor(self.game.whoseTurn))
-            self.statusLabel.text = self.presenter.getTurnStatusText(self.game.whoseTurn)
+            if let winner = self.game.whoseWin() {
+                self.statusLabel.textColor = .from(hex: self.presenter.getStatusTextColor(winner))
+                self.statusLabel.text = self.presenter.getWinStatusText(winner)
+            }
+            else {
+                self.statusLabel.textColor = .from(hex: self.presenter.getStatusTextColor(self.game.whoseTurn))
+                self.statusLabel.text = self.presenter.getTurnStatusText(self.game.whoseTurn)
+            }
         }
     }
 

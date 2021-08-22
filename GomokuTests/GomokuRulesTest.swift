@@ -17,55 +17,129 @@ final class GomokuRulesTest: XCTestCase {
     }
 
     func testIsWin_isFalse_whenBoardIsEmpty() {
-        XCTAssertFalse(isWin())
+        XCTAssertFalse(isWin(.white))
+        XCTAssertFalse(isWin(.black))
     }
 
     func testIsWin_isFalse_whenBoardIsNotEmptyButNotWin() {
-        board.placeStone(.zero, randomStone())
+        let stone = randomStone()
 
-        XCTAssertFalse(isWin())
+        board.placeStone(.zero, stone)
+
+        XCTAssertFalse(isWin(stone))
     }
 
     func testIsWin_isFalse_whenFourInARowInTheFirstRow() {
-        for column in 0..<4 {
-            let intersection = Intersection(0, column)
-            board.placeStone(intersection, .white)
+        let stone = randomStone()
+
+        for column in 0..<rules.numberOfStonesForWin - 1 {
+            board.placeStone(Intersection(0, column), stone)
         }
 
-        XCTAssertFalse(isWin())
+        XCTAssertFalse(isWin(stone))
     }
 
     func testIsWin_isTrue_whenFiveInARowInTheFirstRow() {
+        let stone = randomStone()
+
         for column in 0..<rules.numberOfStonesForWin {
-            let intersection = Intersection(0, column)
-            board.placeStone(intersection, .white)
+            board.placeStone(Intersection(0, column), stone)
         }
 
-        XCTAssertTrue(isWin())
+        XCTAssertTrue(isWin(stone))
     }
 
     func testIsWin_isTrue_whenSixInARowInTheFirstRow() {
-        for column in 0..<6 {
-            let intersection = Intersection(0, column)
-            board.placeStone(intersection, .white)
+        let stone = randomStone()
+
+        for column in 0..<rules.numberOfStonesForWin + 1 {
+            board.placeStone(Intersection(0, column), stone)
         }
 
-        XCTAssertTrue(isWin())
+        XCTAssertTrue(isWin(stone))
+    }
+
+    func testIsWin_isFalseForOtherStone_whenFiveInARow() {
+        for column in 0..<rules.numberOfStonesForWin {
+            board.placeStone(Intersection(0, column), .white)
+        }
+
+        XCTAssertFalse(isWin(.black))
     }
 
     func testIsWin_isTrue_whenFiveInARowInAnyRow() {
+        let stone = randomStone()
+
         for row in 0..<board.NUMBER_OF_ROWS {
             board = Board()
+
             for column in 0..<rules.numberOfStonesForWin {
-                let intersection = Intersection(row, column)
-                board.placeStone(intersection, .white)
+                board.placeStone(Intersection(row, column), stone)
             }
 
-            XCTAssertTrue(isWin())
+            XCTAssertTrue(isWin(stone))
         }
     }
 
-    private func isWin() -> Bool {
-        rules.isWin(board)
+    func testIsWin_isFalse_whenFiveNonConsecutiveInRow() {
+        let stone = randomStone()
+        let nonConsecutiveStonesWithOffsets: [Int: Stone] = [
+            1: stone,
+            3: stone,
+            5: stone,
+            7: stone,
+            9: stone,
+        ]
+
+        nonConsecutiveStonesWithOffsets.forEach { stoneWithOffset in
+            board.placeStone(Intersection(stoneWithOffset.key, 0), stoneWithOffset.value)
+        }
+
+        XCTAssertFalse(isWin(stone))
+    }
+
+    func testIsWin_isTrue_whenFiveInARowInAnyColumn() {
+        let stone = randomStone()
+
+        for column in 0..<board.NUMBER_OF_COLUMNS {
+            board = Board()
+
+            for row in 0..<rules.numberOfStonesForWin {
+                board.placeStone(Intersection(row, column), stone)
+            }
+
+            XCTAssertTrue(isWin(stone))
+        }
+    }
+
+    func testIsWin_isFalse_whenFiveNonConsecutiveInColumn() {
+        let stone = randomStone()
+        let nonConsecutiveStonesWithOffsets: [Int: Stone] = [
+            1: stone,
+            3: stone,
+            5: stone,
+            7: stone,
+            9: stone,
+        ]
+
+        nonConsecutiveStonesWithOffsets.forEach { stoneWithOffset in
+            board.placeStone(Intersection(0, stoneWithOffset.key), stoneWithOffset.value)
+        }
+
+        XCTAssertFalse(isWin(stone))
+    }
+
+    func testIsWin_isTrue_whenFiveConsecutiveInColumn() {
+        let stone = randomStone()
+
+        for column in 0..<board.NUMBER_OF_COLUMNS {
+            board.placeStone(Intersection(0, column), stone)
+        }
+
+        XCTAssertTrue(isWin(stone))
+    }
+
+    private func isWin(_ stone: Stone) -> Bool {
+        rules.isWin(board, stone)
     }
 }

@@ -36,4 +36,28 @@ final class GameTest: XCTestCase {
         XCTAssertEqual(try! board.getStone(intersection).get(), whiteStone)
         XCTAssertEqual(game.whoseTurn, blackStone)
     }
+
+    func testWhoseWin_returnsWhite_whenWhiteWins() {
+        let stone: Stone = .white
+
+        for row in 0..<board.NUMBER_OF_ROWS {
+            board.placeStone(Intersection(row, 0), stone)
+        }
+
+        XCTAssertEqual(stone, game.whoseWin())
+    }
+
+    func testWhoseWin_returnsBlack_whenBlackWins() {
+        let stone: Stone = .black
+
+        for row in 0..<board.NUMBER_OF_ROWS {
+            board.placeStone(Intersection(row, 0), stone)
+        }
+
+        XCTAssertEqual(.black, game.whoseWin())
+    }
+
+    func testWhoseWin_returnsNil_whenNoOneWins() {
+        XCTAssertEqual(nil, game.whoseWin())
+    }
 }

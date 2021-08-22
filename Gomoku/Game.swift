@@ -1,5 +1,5 @@
 final class Game {
-    private let rules: GomokuRules
+    let rules: GomokuRules
     let board: Board
     private(set) var whoseTurn: Stone = .black
 
@@ -11,6 +11,18 @@ final class Game {
     func takeTurn(_ intersection: Intersection) {
         board.placeStone(intersection, whoseTurn)
         whoseTurn = next()
+    }
+
+    func whoseWin() -> Stone? {
+        if rules.isWin(board, .white) {
+            return .white
+        }
+        else if rules.isWin(board, .black) {
+            return .black
+        }
+        else {
+            return nil
+        }
     }
 
     private func next() -> Stone {
