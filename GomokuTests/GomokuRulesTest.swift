@@ -6,8 +6,8 @@ final class GomokuRulesTest: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        GomokuGame.boardFactory = BoardFactoryImpl()
-        board = GomokuGame.boardFactory.makeBoard()
+        GomokuGame.dataFactory = GameDataFactoryImpl()
+        board = GomokuGame.dataFactory.makeData()
         rules = GomokuRules()
     }
 
@@ -33,7 +33,7 @@ final class GomokuRulesTest: XCTestCase {
     func testIsWin_isFalse_whenFourInARowInTheFirstRow() {
         let stone = randomStone()
 
-        for column in 0..<rules.numberOfStonesForWin - 1 {
+        for column in 0..<4 - 1 {
             board.placeStone(Intersection(0, column), stone)
         }
 
@@ -43,7 +43,7 @@ final class GomokuRulesTest: XCTestCase {
     func testIsWin_isTrue_whenFiveInARowInTheFirstRow() {
         let stone = randomStone()
 
-        for column in 0..<rules.numberOfStonesForWin {
+        for column in 0..<5 {
             board.placeStone(Intersection(0, column), stone)
         }
 
@@ -53,7 +53,7 @@ final class GomokuRulesTest: XCTestCase {
     func testIsWin_isTrue_whenSixInARowInTheFirstRow() {
         let stone = randomStone()
 
-        for column in 0..<rules.numberOfStonesForWin + 1 {
+        for column in 0..<6 + 1 {
             board.placeStone(Intersection(0, column), stone)
         }
 
@@ -61,7 +61,7 @@ final class GomokuRulesTest: XCTestCase {
     }
 
     func testIsWin_isFalseForOtherStone_whenFiveInARow() {
-        for column in 0..<rules.numberOfStonesForWin {
+        for column in 0..<5 {
             board.placeStone(Intersection(0, column), .WHITE)
         }
 
@@ -72,9 +72,9 @@ final class GomokuRulesTest: XCTestCase {
         let stone = randomStone()
 
         for row in 0..<board.numberOfRows {
-            board = GomokuGame.boardFactory.makeBoard()
+            board = GomokuGame.dataFactory.makeData()
 
-            for column in 0..<rules.numberOfStonesForWin {
+            for column in 0..<5 {
                 board.placeStone(Intersection(row, column), stone)
             }
 
@@ -103,9 +103,9 @@ final class GomokuRulesTest: XCTestCase {
         let stone = randomStone()
 
         for column in 0..<board.numberOfCols {
-            board = GomokuGame.boardFactory.makeBoard()
+            board = GomokuGame.dataFactory.makeData()
 
-            for row in 0..<rules.numberOfStonesForWin {
+            for row in 0..<5 {
                 board.placeStone(Intersection(row, column), stone)
             }
 

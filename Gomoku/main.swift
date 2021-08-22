@@ -1,6 +1,6 @@
 import UIKit
 
-GomokuGame.boardFactory = BoardFactoryImpl()
+GomokuGame.dataFactory = GameDataFactoryImpl()
 
 UIApplicationMain(
     CommandLine.argc,

@@ -25,33 +25,34 @@ final class GameTest: XCTestCase {
 
         game.takeTurn(zeroIntersection)
 
-        XCTAssertEqual(try! game.board.getStone(zeroIntersection).get(), blackStone)
+        XCTAssertEqual(game.getStone(zeroIntersection), blackStone)
         XCTAssertEqual(game.whoseTurn, whiteStone)
 
         game.takeTurn(intersection)
 
-        XCTAssertEqual(try! game.board.getStone(intersection).get(), whiteStone)
+        XCTAssertEqual(game.getStone(intersection), whiteStone)
         XCTAssertEqual(game.whoseTurn, blackStone)
     }
 
-    func testWhoseWin_returnsWhite_whenWhiteWins() {
-        let stone: Stone = .WHITE
-
-        for row in 0..<game.board.numberOfRows {
-            game.board.placeStone(Intersection(row, 0), stone)
-        }
-
-        XCTAssertEqual(stone, game.findOutTheWinner())
-    }
-
     func testWhoseWin_returnsBlack_whenBlackWins() {
-        let stone: Stone = .BLACK
-
-        for row in 0..<game.board.numberOfRows {
-            game.board.placeStone(Intersection(row, 0), stone)
+        for row in 0..<4 {
+            game.takeTurn(Intersection(row, 0))
+            game.takeTurn(Intersection(row, 1))
         }
+        game.takeTurn(Intersection(4, 0))
 
         XCTAssertEqual(.BLACK, game.findOutTheWinner())
+    }
+
+    func testWhoseWin_returnsWhite_whenWhiteWins() {
+        game.takeTurn(.zero)
+        for row in 1..<5 {
+            game.takeTurn(Intersection(row, 0))
+            game.takeTurn(Intersection(row, 1))
+        }
+        game.takeTurn(Intersection(5, 0))
+
+        XCTAssertEqual(.WHITE, game.findOutTheWinner())
     }
 
     func testWhoseWin_returnsNil_whenNoOneWins() {

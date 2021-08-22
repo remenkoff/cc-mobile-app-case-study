@@ -1,26 +1,31 @@
-final class BoardFactoryImpl: BoardFactory {
-    func makeBoard() -> Board & BoardState {
-        BoardData()
+final class GameDataFactoryImpl: GameDataFactory {
+    func makeData() -> Board & BoardState {
+        GameData()
     }
 }
 
-private final class BoardData: Board, BoardState {
+private final class GameData: Board, BoardState {
     let numberOfRows = 19
     let numberOfCols = 19
+    private(set) var whoseTurn: Stone = .BLACK
+    private var _placedStones = [Location: Stone]()
+    var placedStones: [Location: Stone] {
+        _placedStones
+    }
 
-    private var placedStones = [Location: Stone]()
-
+    @discardableResult
     func placeStone(_ intersection: Intersection, _ stone: Stone) -> Result<Void, BoardError> {
         switch makeLocation(intersection) {
             case .success(let location):
                 if let _ = placedStones[location] {
                     return .failure(.PLACE_OCCUPIED)
                 }
-                placedStones[location] = stone
+                _placedStones[location] = stone
 
             case .failure(let error):
                 return .failure(error)
         }
+        whoseTurn = next()
         return .success(Void())
     }
 
@@ -37,8 +42,8 @@ private final class BoardData: Board, BoardState {
         }
     }
 
-    func getPlacedStones() -> [Location: Stone] {
-        placedStones
+    private func next() -> Stone {
+        whoseTurn == .WHITE ? .BLACK : .WHITE
     }
 
     private func makeLocation(_ intersection: Intersection) -> Result<Location, BoardError> {

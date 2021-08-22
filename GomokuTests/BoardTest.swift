@@ -5,8 +5,8 @@ final class BoardTest: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        GomokuGame.boardFactory = BoardFactoryImpl()
-        board = GomokuGame.boardFactory.makeBoard()
+        GomokuGame.dataFactory = GameDataFactoryImpl()
+        board = GomokuGame.dataFactory.makeData()
     }
 
     override func tearDown() {
@@ -15,7 +15,7 @@ final class BoardTest: XCTestCase {
     }
 
     func testPlacedStones_isEmpty_whenBoardIsNew() {
-        XCTAssertEqual(board.getPlacedStones().count, 0)
+        XCTAssertEqual(board.placedStones.count, 0)
     }
 
     func testPlaceStone_addsTheSameAndTheOnlyOneStone() {
@@ -25,7 +25,7 @@ final class BoardTest: XCTestCase {
         board.placeStone(intersection, stone)
 
         XCTAssertEqual(try! board.getStone(intersection).get(), stone)
-        XCTAssertEqual(board.getPlacedStones().count, 1)
+        XCTAssertEqual(board.placedStones.count, 1)
 
         intersection = .zero
         stone = .BLACK
@@ -33,7 +33,7 @@ final class BoardTest: XCTestCase {
         board.placeStone(intersection, stone)
 
         XCTAssertEqual(try! board.getStone(intersection).get(), stone)
-        XCTAssertEqual(board.getPlacedStones().count, 2)
+        XCTAssertEqual(board.placedStones.count, 2)
     }
 
     func testGetStone_fails_whenBoardIsNew() {
@@ -99,6 +99,6 @@ final class BoardTest: XCTestCase {
                     XCTAssertEqual(error, expectedError)
             }
         }
-        XCTAssertEqual(board.getPlacedStones().count, 0)
+        XCTAssertEqual(board.placedStones.count, 0)
     }
 }

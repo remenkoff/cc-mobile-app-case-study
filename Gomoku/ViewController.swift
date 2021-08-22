@@ -8,26 +8,32 @@ final class ViewController: UIViewController {
         let minSideLength = min(view.frame.width, view.frame.height)
         let frame = CGRect(x: 0.0, y: 200.0, width: minSideLength, height: minSideLength)
 
-        let onStoneColorNeeded: GridView.StoneNeededCompletion = { [weak self] row, column in
-            guard let stone = try? self?.game.board.getStone(Intersection(row, column)).get() else { return nil }
+        let onStoneNeeded: GridView.StoneNeededCompletion = { [weak self] row, column in
+            guard let stone = self?.game.getStone(Intersection(row, column)) else {
+                return nil
+            }
             switch stone {
                 case .WHITE: return .white
                 case .BLACK: return .black
             }
         }
 
-        let onIntersectionTapRecognized: GridView.TapRecognizedCompletion = { [weak self] row, column in
+        let onTapRecognized: GridView.TapRecognizedCompletion = { [weak self] row, column in
             guard let self = self else { return }
-            self.game.takeTurn(Intersection(row, column))
-            self.updateStatusLabel()
+            if let boardError = self.game.takeTurn(Intersection(row, column)) {
+                self.showError(self.presenter.getErrorMessage(boardError), self.presenter.getErrorMessageColor())
+            }
+            else {
+                self.updateStatusLabel()
+            }
         }
 
         let gridView = GridView(
-            game.board.numberOfRows,
-            game.board.numberOfCols,
+            game.boardHeight,
+            game.boardWidth,
             frame,
-            onStoneColorNeeded,
-            onIntersectionTapRecognized
+            onStoneNeeded,
+            onTapRecognized
         )
 
         return gridView
@@ -60,6 +66,13 @@ final class ViewController: UIViewController {
                 self.statusLabel.textColor = .from(hex: self.presenter.getStatusTextColor(self.game.whoseTurn))
                 self.statusLabel.text = self.presenter.getTurnStatusText(self.game.whoseTurn)
             }
+        }
+    }
+
+    private func showError(_ message: String, _ color: Int) {
+        DispatchQueue.main.async { [weak self] in
+            self?.statusLabel.textColor = .from(hex: color)
+            self?.statusLabel.text = message
         }
     }
 

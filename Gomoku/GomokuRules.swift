@@ -3,7 +3,19 @@ final class GomokuRules {
         case HORIZONTAL, VERTICAL
     }
 
-    let numberOfStonesForWin = 5
+    private let numberOfStonesToWin = 5
+
+    func findOutTheWinner(_ board: BoardState) -> Stone? {
+        if isWin(board, .WHITE) {
+            return .WHITE
+        }
+        else if isWin(board, .BLACK) {
+            return .BLACK
+        }
+        else {
+            return nil
+        }
+    }
 
     func isWin(_ board: BoardState, _ stone: Stone) -> Bool {
         isDimensionWin(.HORIZONTAL, board, stone) || isDimensionWin(.VERTICAL, board, stone)
@@ -14,19 +26,20 @@ final class GomokuRules {
         let maxHeight = axis == .VERTICAL ? board.numberOfCols : board.numberOfRows
 
         for row in 0..<maxWidth {
-            var numberOfConsecutiveStones = 0
+            var consecutiveStones = 0
             for column in 0..<maxHeight {
                 let intersection = axis == .HORIZONTAL ? Intersection(row, column) : Intersection(column, row)
-                if let foundStone = try? board.getStone(intersection).get(), foundStone == stone {
-                    numberOfConsecutiveStones += 1
-                    if numberOfConsecutiveStones >= numberOfStonesForWin {
-                        return true
-                    }
-                } else {
-                    numberOfConsecutiveStones = 0
+                let foundStone = try? board.getStone(intersection).get()
+                if countConsecutiveStones(&consecutiveStones, foundStone, stone) >= numberOfStonesToWin {
+                    return true
                 }
             }
         }
         return false
+    }
+
+    private func countConsecutiveStones(_ consecutiveStones: inout Int, _ foundStone: Stone?, _ stone: Stone) -> Int {
+        consecutiveStones = foundStone == stone ? consecutiveStones + 1 : 0
+        return consecutiveStones
     }
 }
