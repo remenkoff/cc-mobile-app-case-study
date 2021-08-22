@@ -1,11 +1,12 @@
 import XCTest
 
 final class BoardTest: XCTestCase {
-    private var board: Board!
+    private var board: (Board & BoardState)!
 
     override func setUp() {
         super.setUp()
-        board = BoardData()
+        GomokuGame.boardFactory = BoardFactoryImpl()
+        board = GomokuGame.boardFactory.makeBoard()
     }
 
     override func tearDown() {
@@ -19,7 +20,7 @@ final class BoardTest: XCTestCase {
 
     func testPlaceStone_addsTheSameAndTheOnlyOneStone() {
         var intersection = Intersection(1, 1)
-        var stone: Stone = .white
+        var stone: Stone = .WHITE
 
         board.placeStone(intersection, stone)
 
@@ -27,7 +28,7 @@ final class BoardTest: XCTestCase {
         XCTAssertEqual(board.getPlacedStones().count, 1)
 
         intersection = .zero
-        stone = .black
+        stone = .BLACK
 
         board.placeStone(intersection, stone)
 
@@ -36,7 +37,7 @@ final class BoardTest: XCTestCase {
     }
 
     func testGetStone_fails_whenBoardIsNew() {
-        let expectedError: BoardError = .stoneNotFound
+        let expectedError: BoardError = .STONE_NOT_FOUND
 
         switch board.getStone(.zero) {
             case .success: XCTFail("Failure result with `\(expectedError)` error was expected, but result succeeded.")
@@ -45,7 +46,7 @@ final class BoardTest: XCTestCase {
     }
     
     func testGetStone_fails_whenInvalidIntersectionProvided() {
-        let expectedError: BoardError = .badLocation
+        let expectedError: BoardError = .BAD_LOCATION
 
         switch board.getStone(Intersection(-1, -1)) {
             case .success: XCTFail("Failure result with `\(expectedError)` error was expected, but result succeeded.")
@@ -63,7 +64,7 @@ final class BoardTest: XCTestCase {
     }
 
     func testPlaceStone_fails_whenIntersectionIsOccupied() {
-        let expectedError: BoardError = .placeOccupied
+        let expectedError: BoardError = .PLACE_OCCUPIED
         let intersection: Intersection = .zero
         let stone = randomStone()
 
@@ -78,7 +79,7 @@ final class BoardTest: XCTestCase {
     }
 
     func testPlaceStone_fails_whenIntersectionIsOutsideBounds() {
-        let expectedError: BoardError = .badLocation
+        let expectedError: BoardError = .BAD_LOCATION
         let invalidIntersections = [
             Intersection(-1, -1),
             Intersection(0, -1),

@@ -1,11 +1,11 @@
 import XCTest
 
 final class GamePresenterTest: XCTestCase {
-    private var gamePresenter: GamePresenter!
+    private var gamePresenter: GomokuPresenter!
 
     override func setUp() {
         super.setUp()
-        gamePresenter = GamePresenter()
+        gamePresenter = GomokuPresenter()
     }
 
     override func tearDown() {
@@ -14,17 +14,17 @@ final class GamePresenterTest: XCTestCase {
     }
 
     func testGetTurnStatusText_returnsProperlyFormattedStatusText() {
-        XCTAssertEqual(gamePresenter.getTurnStatusText(.white), "White's Turn")
-        XCTAssertEqual(gamePresenter.getTurnStatusText(.black), "Black's Turn")
+        XCTAssertEqual(gamePresenter.getTurnStatusText(.WHITE), "White's Turn")
+        XCTAssertEqual(gamePresenter.getTurnStatusText(.BLACK), "Black's Turn")
     }
 
     func testGetStoneStatusColor_returnsAppropriateStatusColor() {
-        XCTAssertEqual(gamePresenter.getStatusTextColor(.white), 0xFFFFFF)
-        XCTAssertEqual(gamePresenter.getStatusTextColor(.black), 0x000000)
+        XCTAssertEqual(gamePresenter.getStatusTextColor(.WHITE), 0xFFFFFF)
+        XCTAssertEqual(gamePresenter.getStatusTextColor(.BLACK), 0x000000)
     }
 
     func testGetWinStatusText_returnsProperlyFormattedStatusText() {
-        XCTAssertEqual(gamePresenter.getWinStatusText(.white), "White Wins!")
-        XCTAssertEqual(gamePresenter.getWinStatusText(.black), "Black Wins!")
+        XCTAssertEqual(gamePresenter.getWinStatusText(.WHITE), "White Wins!")
+        XCTAssertEqual(gamePresenter.getWinStatusText(.BLACK), "Black Wins!")
     }
 }

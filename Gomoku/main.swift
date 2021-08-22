@@ -1,5 +1,7 @@
 import UIKit
 
+GomokuGame.boardFactory = BoardFactoryImpl()
+
 UIApplicationMain(
     CommandLine.argc,
     CommandLine.unsafeArgv,

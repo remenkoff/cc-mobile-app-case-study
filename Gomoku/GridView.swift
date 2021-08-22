@@ -1,8 +1,8 @@
 import UIKit
 
 final class GridView: UIView {
-    typealias StoneNeededCompletion = (Intersection) -> UIColor?
-    typealias TapRecognizedCompletion = (Intersection) -> Void
+    typealias StoneNeededCompletion = (Int, Int) -> UIColor?
+    typealias TapRecognizedCompletion = (Int, Int) -> Void
 
     private let numberOfRows: Int
     private let numberOfColumns: Int
@@ -11,19 +11,19 @@ final class GridView: UIView {
     private let cellSize: CGFloat
     private let stoneSizeFactor: CGFloat = 2.4
     private let onStoneColorNeeded: StoneNeededCompletion?
-    private let onIntersectionTapRecognized: TapRecognizedCompletion?
+    private let onTapRecognized: TapRecognizedCompletion?
 
     init(
         _ numberOfRows: Int,
         _ numberOfColumns: Int,
         _ frame: CGRect,
         _ onStoneColorNeeded: StoneNeededCompletion? = nil,
-        _ onIntersectionTapRecognized: TapRecognizedCompletion? = nil
+        _ onTapRecognized: TapRecognizedCompletion? = nil
     ) {
         self.numberOfRows = numberOfRows
         self.numberOfColumns = numberOfColumns
         self.onStoneColorNeeded = onStoneColorNeeded
-        self.onIntersectionTapRecognized = onIntersectionTapRecognized
+        self.onTapRecognized = onTapRecognized
         gridWidth = min(frame.width, frame.height)
         cellCount = numberOfColumns + 1
         cellSize = gridWidth / CGFloat(cellCount)
@@ -68,15 +68,14 @@ final class GridView: UIView {
     private func drawStones() {
         for column in 0..<numberOfColumns {
             for row in 0..<numberOfRows {
-                let intersection = Intersection(row, column)
-                guard let stoneColor = onStoneColorNeeded?(intersection) else {
+                guard let stoneColor = onStoneColorNeeded?(row, column) else {
                     continue
                 }
 
                 stoneColor.setFill()
 
-                let centerX = CGFloat(intersection.column) * cellSize + cellSize
-                let centerY = CGFloat(intersection.row) * cellSize + cellSize
+                let centerX = CGFloat(column) * cellSize + cellSize
+                let centerY = CGFloat(row) * cellSize + cellSize
                 let center = CGPoint(x: centerX, y: centerY)
                 let radius = cellSize / stoneSizeFactor
 
@@ -98,8 +97,7 @@ final class GridView: UIView {
         let recognizedLocation = recognizer.location(in: self)
         let tappedRow = Int(round((recognizedLocation.y - cellSize) / cellSize))
         let tappedColumn = Int(round((recognizedLocation.x - cellSize) / cellSize))
-        let tappedIntersection = Intersection(tappedRow, tappedColumn)
-        onIntersectionTapRecognized?(tappedIntersection)
+        onTapRecognized?(tappedRow, tappedColumn)
         setNeedsDisplay()
     }
 }

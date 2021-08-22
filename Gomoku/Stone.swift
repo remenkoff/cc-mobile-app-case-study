@@ -1,3 +1,3 @@
 enum Stone: String, CaseIterable {
-    case white, black
+    case WHITE, BLACK
 }

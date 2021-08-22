@@ -1,33 +1,30 @@
 import UIKit
 
 final class ViewController: UIViewController {
-    private lazy var game: Game = {
-        Game(board, GomokuRules())
-    }()
-    private let board = BoardData()
-    private let presenter = GamePresenter()
+    private let game = GomokuGame()
+    private let presenter = GomokuPresenter()
 
     private lazy var gridView: GridView = {
         let minSideLength = min(view.frame.width, view.frame.height)
         let frame = CGRect(x: 0.0, y: 200.0, width: minSideLength, height: minSideLength)
 
-        let onStoneColorNeeded: GridView.StoneNeededCompletion = { [weak self] intersection in
-            guard let stone = try? self?.board.getStone(intersection).get() else { return nil }
+        let onStoneColorNeeded: GridView.StoneNeededCompletion = { [weak self] row, column in
+            guard let stone = try? self?.game.board.getStone(Intersection(row, column)).get() else { return nil }
             switch stone {
-                case .white: return .white
-                case .black: return .black
+                case .WHITE: return .white
+                case .BLACK: return .black
             }
         }
 
-        let onIntersectionTapRecognized: GridView.TapRecognizedCompletion = { [weak self] intersection in
+        let onIntersectionTapRecognized: GridView.TapRecognizedCompletion = { [weak self] row, column in
             guard let self = self else { return }
-            self.game.takeTurn(intersection)
+            self.game.takeTurn(Intersection(row, column))
             self.updateStatusLabel()
         }
 
         let gridView = GridView(
-            board.numberOfRows,
-            board.numberOfCols,
+            game.board.numberOfRows,
+            game.board.numberOfCols,
             frame,
             onStoneColorNeeded,
             onIntersectionTapRecognized
@@ -55,7 +52,7 @@ final class ViewController: UIViewController {
     private func updateStatusLabel() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            if let winner = self.game.whoseWin() {
+            if let winner = self.game.findOutTheWinner() {
                 self.statusLabel.textColor = .from(hex: self.presenter.getStatusTextColor(winner))
                 self.statusLabel.text = self.presenter.getWinStatusText(winner)
             }

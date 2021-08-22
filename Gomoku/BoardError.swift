@@ -1,5 +1,5 @@
 enum BoardError: Error {
-    case placeOccupied
-    case badLocation
-    case stoneNotFound
+    case PLACE_OCCUPIED
+    case BAD_LOCATION
+    case STONE_NOT_FOUND
 }

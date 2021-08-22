@@ -1,12 +1,13 @@
 import XCTest
 
 final class GomokuRulesTest: XCTestCase {
-    private var board: Board!
+    private var board: (Board & BoardState)!
     private var rules: GomokuRules!
 
     override func setUp() {
         super.setUp()
-        board = BoardData()
+        GomokuGame.boardFactory = BoardFactoryImpl()
+        board = GomokuGame.boardFactory.makeBoard()
         rules = GomokuRules()
     }
 
@@ -17,8 +18,8 @@ final class GomokuRulesTest: XCTestCase {
     }
 
     func testIsWin_isFalse_whenBoardIsEmpty() {
-        XCTAssertFalse(isWin(.white))
-        XCTAssertFalse(isWin(.black))
+        XCTAssertFalse(rules.isWin(board, .WHITE))
+        XCTAssertFalse(rules.isWin(board, .BLACK))
     }
 
     func testIsWin_isFalse_whenBoardIsNotEmptyButNotWin() {
@@ -26,7 +27,7 @@ final class GomokuRulesTest: XCTestCase {
 
         board.placeStone(.zero, stone)
 
-        XCTAssertFalse(isWin(stone))
+        XCTAssertFalse(rules.isWin(board, stone))
     }
 
     func testIsWin_isFalse_whenFourInARowInTheFirstRow() {
@@ -36,7 +37,7 @@ final class GomokuRulesTest: XCTestCase {
             board.placeStone(Intersection(0, column), stone)
         }
 
-        XCTAssertFalse(isWin(stone))
+        XCTAssertFalse(rules.isWin(board, stone))
     }
 
     func testIsWin_isTrue_whenFiveInARowInTheFirstRow() {
@@ -46,7 +47,7 @@ final class GomokuRulesTest: XCTestCase {
             board.placeStone(Intersection(0, column), stone)
         }
 
-        XCTAssertTrue(isWin(stone))
+        XCTAssertTrue(rules.isWin(board, stone))
     }
 
     func testIsWin_isTrue_whenSixInARowInTheFirstRow() {
@@ -56,28 +57,28 @@ final class GomokuRulesTest: XCTestCase {
             board.placeStone(Intersection(0, column), stone)
         }
 
-        XCTAssertTrue(isWin(stone))
+        XCTAssertTrue(rules.isWin(board, stone))
     }
 
     func testIsWin_isFalseForOtherStone_whenFiveInARow() {
         for column in 0..<rules.numberOfStonesForWin {
-            board.placeStone(Intersection(0, column), .white)
+            board.placeStone(Intersection(0, column), .WHITE)
         }
 
-        XCTAssertFalse(isWin(.black))
+        XCTAssertFalse(rules.isWin(board, .BLACK))
     }
 
     func testIsWin_isTrue_whenFiveInARowInAnyRow() {
         let stone = randomStone()
 
         for row in 0..<board.numberOfRows {
-            board = BoardData()
+            board = GomokuGame.boardFactory.makeBoard()
 
             for column in 0..<rules.numberOfStonesForWin {
                 board.placeStone(Intersection(row, column), stone)
             }
 
-            XCTAssertTrue(isWin(stone))
+            XCTAssertTrue(rules.isWin(board, stone))
         }
     }
 
@@ -95,20 +96,20 @@ final class GomokuRulesTest: XCTestCase {
             board.placeStone(Intersection(stoneWithOffset.key, 0), stoneWithOffset.value)
         }
 
-        XCTAssertFalse(isWin(stone))
+        XCTAssertFalse(rules.isWin(board, stone))
     }
 
     func testIsWin_isTrue_whenFiveInARowInAnyColumn() {
         let stone = randomStone()
 
         for column in 0..<board.numberOfCols {
-            board = BoardData()
+            board = GomokuGame.boardFactory.makeBoard()
 
             for row in 0..<rules.numberOfStonesForWin {
                 board.placeStone(Intersection(row, column), stone)
             }
 
-            XCTAssertTrue(isWin(stone))
+            XCTAssertTrue(rules.isWin(board, stone))
         }
     }
 
@@ -126,7 +127,7 @@ final class GomokuRulesTest: XCTestCase {
             board.placeStone(Intersection(0, stoneWithOffset.key), stoneWithOffset.value)
         }
 
-        XCTAssertFalse(isWin(stone))
+        XCTAssertFalse(rules.isWin(board, stone))
     }
 
     func testIsWin_isTrue_whenFiveConsecutiveInColumn() {
@@ -136,10 +137,6 @@ final class GomokuRulesTest: XCTestCase {
             board.placeStone(Intersection(0, column), stone)
         }
 
-        XCTAssertTrue(isWin(stone))
-    }
-
-    private func isWin(_ stone: Stone) -> Bool {
-        rules.isWin(board, stone)
+        XCTAssertTrue(rules.isWin(board, stone))
     }
 }

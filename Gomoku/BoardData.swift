@@ -1,4 +1,10 @@
-final class BoardData: Board {
+final class BoardFactoryImpl: BoardFactory {
+    func makeBoard() -> Board & BoardState {
+        BoardData()
+    }
+}
+
+private final class BoardData: Board, BoardState {
     let numberOfRows = 19
     let numberOfCols = 19
 
@@ -8,7 +14,7 @@ final class BoardData: Board {
         switch makeLocation(intersection) {
             case .success(let location):
                 if let _ = placedStones[location] {
-                    return .failure(.placeOccupied)
+                    return .failure(.PLACE_OCCUPIED)
                 }
                 placedStones[location] = stone
 
@@ -24,7 +30,7 @@ final class BoardData: Board {
                 if let stone = placedStones[location] {
                     return .success(stone)
                 } else {
-                    return .failure(.stoneNotFound)
+                    return .failure(.STONE_NOT_FOUND)
                 }
             case .failure(let error):
                 return .failure(error)
@@ -37,7 +43,7 @@ final class BoardData: Board {
 
     private func makeLocation(_ intersection: Intersection) -> Result<Location, BoardError> {
         if isNotValidLocation(intersection) {
-            return .failure(.badLocation)
+            return .failure(.BAD_LOCATION)
         }
         let intersection = intersection.column * numberOfCols + intersection.row
         return .success(intersection)
